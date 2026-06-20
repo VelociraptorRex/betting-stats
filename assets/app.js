@@ -16,17 +16,6 @@ function renderBankChart() {
     line: { color: "#0000ff", width: 3 },
     marker: { color: "#0000ff", size: 8 }
   };
-    customdata: chartData.map(d => [
-      d.team1.flag, d.team1.name, d.team2.flag, d.team2.name,
-      d.friendBet, d.friendCoef, d.friendProfit, d.friendBank
-    ]),
-    hovertemplate:
-      "<b>Матч:</b> %{customdata[0]} %{customdata[1]} — %{customdata[2]} %{customdata[3]}<br>" +
-      "<b>Ставка:</b> %{customdata[4]}<br>" +
-      "<b>Коэффициент:</b> %{customdata[5]}<br>" +
-      "<b>Прибыль / убыль:</b> %{customdata[6]:+d}<br>" +
-      "<b>Итоговый банк:</b> %{customdata[7]}<extra>Gerzog</extra>"
-  };
 
   const yukon = {
     x,
@@ -37,17 +26,6 @@ function renderBankChart() {
     hovertemplate: "",
     line: { color: "#ff0000", width: 3 },
     marker: { color: "#ff0000", size: 8 }
-  };
-    customdata: chartData.map(d => [
-      d.team1.flag, d.team1.name, d.team2.flag, d.team2.name,
-      d.yourBet, d.yourCoef, d.yourProfit, d.yourBank
-    ]),
-    hovertemplate:
-      "<b>Матч:</b> %{customdata[0]} %{customdata[1]} — %{customdata[2]} %{customdata[3]}<br>" +
-      "<b>Ставка:</b> %{customdata[4]}<br>" +
-      "<b>Коэффициент:</b> %{customdata[5]}<br>" +
-      "<b>Прибыль / убыль:</b> %{customdata[6]:+d}<br>" +
-      "<b>Итоговый банк:</b> %{customdata[7]}<extra>Yukon</extra>"
   };
 
   const layout = {
