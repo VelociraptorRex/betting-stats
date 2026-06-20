@@ -9,13 +9,25 @@ body {
   font-family: "Times New Roman", Times, serif;
 }
 
-.page {
+/* ОБЩАЯ ШИРИНА */
+
+.page,
+main,
+.site-header,
+footer {
   width: min(1500px, calc(100% - 40px));
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ЗАГОЛОВКИ */
+
+.page {
   padding: 34px 0 50px;
 }
 
-.page-title {
+.page-title,
+.site-header h1 {
   margin: 0 0 24px;
   text-align: center;
   font-size: 44px;
@@ -23,7 +35,24 @@ body {
   line-height: 1.1;
 }
 
-.top-menu {
+.site-header {
+  padding: 34px 0 24px;
+  text-align: center;
+}
+
+.eyebrow,
+.site-header .eyebrow {
+  margin: 0 0 16px;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+}
+
+/* МЕНЮ: новое index.html + старые страницы */
+
+.top-menu,
+.site-header nav,
+header nav {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -31,7 +60,9 @@ body {
   margin-bottom: 32px;
 }
 
-.top-menu a {
+.top-menu a,
+.site-header nav a,
+header nav a {
   min-width: 145px;
   padding: 14px 20px;
   border: 2px solid #fff;
@@ -44,10 +75,14 @@ body {
   transition: 0.15s ease;
 }
 
-.top-menu a:hover {
+.top-menu a:hover,
+.site-header nav a:hover,
+header nav a:hover {
   background: #fff;
   color: #000;
 }
+
+/* КАРТОЧКИ НА ГЛАВНОЙ */
 
 .summary-grid {
   display: grid;
@@ -83,13 +118,7 @@ body {
   color: #cfcfcf;
 }
 
-.plus {
-  color: #3ddc84 !important;
-}
-
-.minus {
-  color: #ff5a5f !important;
-}
+/* ГРАФИК */
 
 .chart-block {
   padding: 18px;
@@ -113,8 +142,95 @@ body {
   font-size: 18px;
 }
 
+/* СТАРЫЕ СТРАНИЦЫ: БЛОКИ, ТАБЛИЦЫ */
+
+.panel,
+.notice,
+.card {
+  margin-bottom: 24px;
+  padding: 22px;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  background: #080808;
+}
+
+.panel h2,
+.notice h2 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 34px;
+}
+
+.notice p,
+.panel p {
+  color: #fff;
+  font-size: 22px;
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+  font-size: 22px;
+}
+
+th,
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #555;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  border-bottom: 2px solid #fff;
+  font-weight: 700;
+}
+
+tr:hover td {
+  background: #151515;
+}
+
+/* ЦВЕТА ПРИБЫЛИ */
+
+.plus {
+  color: #3ddc84 !important;
+  font-weight: 700;
+}
+
+.minus {
+  color: #ff5a5f !important;
+  font-weight: 700;
+}
+
+/* ФУТЕР */
+
+footer {
+  padding: 20px 0 40px;
+  text-align: center;
+  color: #cfcfcf;
+  font-size: 18px;
+}
+
+code {
+  color: #fff;
+}
+
+/* АДАПТИВ */
+
 @media (max-width: 950px) {
-  .page-title {
+  .page-title,
+  .site-header h1 {
     font-size: 34px;
   }
 
@@ -122,7 +238,13 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 
-  .top-menu a {
+  .grid-two {
+    grid-template-columns: 1fr;
+  }
+
+  .top-menu a,
+  .site-header nav a,
+  header nav a {
     min-width: 130px;
     font-size: 19px;
   }
@@ -133,7 +255,10 @@ body {
 }
 
 @media (max-width: 560px) {
-  .page {
+  .page,
+  main,
+  .site-header,
+  footer {
     width: min(100% - 20px, 1500px);
   }
 
@@ -141,62 +266,19 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .top-menu {
+  .top-menu,
+  .site-header nav,
+  header nav {
     gap: 10px;
   }
 
-  .top-menu a {
+  .top-menu a,
+  .site-header nav a,
+  header nav a {
     min-width: 100%;
   }
-}
 
-.site-header {
-  width: min(1500px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 34px 0 24px;
-  text-align: center;
-}
-
-.site-header h1 {
-  margin: 18px 0 24px;
-  text-align: center;
-  font-size: 44px;
-  line-height: 1.1;
-}
-
-.site-header .eyebrow {
-  margin: 0 0 12px;
-  font-size: 24px;
-  color: #fff;
-}
-
-.site-header nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.site-header nav a {
-  min-width: 145px;
-  padding: 14px 20px;
-  border: 2px solid #fff;
-  border-radius: 14px;
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  font-size: 22px;
-  line-height: 1;
-}
-
-.site-header nav a:hover {
-  background: #fff;
-  color: #000;
-}
-
-@media (max-width: 560px) {
-  .site-header nav a {
-    min-width: 100%;
+  table {
+    font-size: 18px;
   }
 }
