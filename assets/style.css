@@ -365,3 +365,12 @@ code {
 .light-theme .notice p {
   color: #000;
 }
+
+.light-theme .site-header h1,
+.light-theme .page-title {
+  color: #000;
+}
+
+.light-theme .site-header .eyebrow {
+  color: #444;
+}
