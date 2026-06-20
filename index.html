@@ -4,49 +4,356 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Динамика банка</title>
-  <link rel="stylesheet" href="assets/style.css">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    main {
+      width: min(1500px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 50px;
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      text-align: center;
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .top-menu {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .top-menu a {
+      min-width: 145px;
+      padding: 14px 20px;
+      border: 2px solid #fff;
+      border-radius: 14px;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      font-size: 22px;
+      line-height: 1;
+      transition: 0.15s ease;
+    }
+
+    .top-menu a:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+
+    .summary-card {
+      border: 2px solid #fff;
+      border-radius: 20px;
+      padding: 24px 16px;
+      text-align: center;
+      background: #080808;
+    }
+
+    .summary-card .label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
+
+    .summary-card .value {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 44px;
+      font-weight: 700;
+    }
+
+    .summary-card .sub {
+      display: block;
+      font-size: 20px;
+      color: #cfcfcf;
+    }
+
+    .plus {
+      color: #3ddc84;
+    }
+
+    .minus {
+      color: #ff5a5f;
+    }
+
+    .chart-block {
+      padding: 18px;
+      border: 2px solid #fff;
+      border-radius: 22px;
+      background: #111;
+    }
+
+    #bank-chart {
+      width: 100%;
+      height: 690px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .note {
+      margin: 12px 0 0;
+      text-align: center;
+      color: #cfcfcf;
+      font-size: 18px;
+    }
+
+    @media (max-width: 950px) {
+      h1 {
+        font-size: 34px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .top-menu a {
+        min-width: 130px;
+        font-size: 19px;
+      }
+
+      #bank-chart {
+        height: 560px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      main {
+        width: min(100% - 20px, 1500px);
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .top-menu {
+        gap: 10px;
+      }
+
+      .top-menu a {
+        min-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-<header class="site-header">
-  <div>
-    <p class="eyebrow">World Cup 2026 betting dashboard</p>
-    <h1>Динамика банка после матчей первого и второго тура</h1>
-  </div>
-  <nav>
+<main>
+  <h1>Динамика банка после матчей первого и второго тура ЧМ-2026</h1>
+
+  <nav class="top-menu">
     <a href="index.html">График</a>
-    <a href="bets.html">Все ставки</a>
     <a href="records.html">Рекорды</a>
     <a href="countries.html">Страны</a>
     <a href="markets.html">Типы ставок</a>
+    <a href="bets.html">Все ставки</a>
   </nav>
-</header>
-<main>
 
-<section class="cards">
-  <article class="card"><span>Gerzog</span><strong>1217</strong><em class="plus">+217</em></article>
-  <article class="card"><span>Yukon</span><strong>1091</strong><em class="plus">+91</em></article>
-  <article class="card"><span>Матчей</span><strong>32</strong><em>2 тура</em></article>
-  <article class="card"><span>Лидер</span><strong>Gerzog</strong><em>по текущему банку</em></article>
-</section>
+  <section class="summary-grid">
+    <article class="summary-card">
+      <span class="label">Gerzog</span>
+      <span class="value">1217</span>
+      <span class="sub plus">+217</span>
+    </article>
 
-<section class="panel">
-  <div class="panel-title">
-    <h2>Интерактивный график</h2>
-    <p>Наведи на точку: увидишь матч, банк и изменение после ставки.</p>
-  </div>
-  <div id="bank-chart" class="chart"></div>
-</section>
+    <article class="summary-card">
+      <span class="label">Yukon</span>
+      <span class="value">1091</span>
+      <span class="sub plus">+91</span>
+    </article>
 
-<section class="panel">
-  <h2>Самые прибыльные ставки</h2>
-  <div class="table-wrap"><table><thead><tr><th>№</th><th>Игрок</th><th>Матч</th><th>Ставка</th><th>Кэф</th><th>Профит</th></tr></thead><tbody><tr><td>28</td><td>Gerzog</td><td>США — Австралия</td><td>2-0</td><td>7.6</td><td class="plus">660</td></tr><tr><td>25</td><td>Gerzog</td><td>Швейцария — Босния и Герцеговина</td><td>Удаление будет</td><td>4.55</td><td class="plus">355</td></tr><tr><td>8</td><td>Yukon</td><td>Германия — Кюрасао</td><td>ТМ &gt; 5,5</td><td>3.2</td><td class="plus">220</td></tr><tr><td>32</td><td>Yukon</td><td>Нидерланды — Швеция</td><td>Нидерланды пропустят, но выиграют</td><td>3.1</td><td class="plus">210</td></tr><tr><td>17</td><td>Gerzog</td><td>Ирак — Норвегия</td><td>Эрлинг Холанн — дубль</td><td>3.0</td><td class="plus">200</td></tr><tr><td>26</td><td>Gerzog</td><td>Канада — Катар</td><td>П1 в обоих таймах</td><td>2.56</td><td class="plus">156</td></tr><tr><td>32</td><td>Gerzog</td><td>Нидерланды — Швеция</td><td>ТМ &gt; 3,5</td><td>2.52</td><td class="plus">152</td></tr><tr><td>14</td><td>Yukon</td><td>Саудовская Аравия — Уругвай</td><td>Штанга/перекладина будет</td><td>2.44</td><td class="plus">144</td></tr><tr><td>10</td><td>Yukon</td><td>Кот д&#x27;Ивуар — Эквадор</td><td>ЖК: П1</td><td>2.34</td><td class="plus">134</td></tr><tr><td>18</td><td>Yukon</td><td>Аргентина — Алжир</td><td>Сухая П1 и ТМ &lt; 3,5</td><td>2.34</td><td class="plus">134</td></tr></tbody></table></div>
-</section>
+    <article class="summary-card">
+      <span class="label">Количество матчей</span>
+      <span class="value">32</span>
+      <span class="sub">2 тура</span>
+    </article>
 
+    <article class="summary-card">
+      <span class="label">Лидер по банку</span>
+      <span class="value">Gerzog</span>
+      <span class="sub">после 32 матчей</span>
+    </article>
+  </section>
+
+  <section class="chart-block">
+    <div id="bank-chart"></div>
+    <p class="note">По оси X указаны пары в FIFA-формате: ARG-ALG, UZB-COL и т.д.</p>
+  </section>
 </main>
-<footer>
-  <p>Статический сайт для GitHub Pages. Данные хранятся в <code>assets/app.js</code>.</p>
-</footer>
-<script src="assets/app.js"></script>
+
+<script>
+const chartData = [{"n": 0, "xLabel": "START", "match": "Старт турнира", "team1": {"name": "Старт", "code": "START", "flag": "•"}, "team2": {"name": "турнира", "code": "", "flag": ""}, "friendBet": "—", "friendCoef": 0, "friendBank": 1000, "friendProfit": 0, "yourBet": "—", "yourCoef": 0, "yourBank": 1000, "yourProfit": 0}, {"n": 1, "xLabel": "KOR-CZE", "match": "Южная Корея — Чехия", "team1": {"name": "Южная Корея", "code": "KOR", "flag": "🇰🇷"}, "team2": {"name": "Чехия", "code": "CZE", "flag": "🇨🇿"}, "friendBet": "1-1", "friendCoef": 6.3, "friendBank": 900, "friendProfit": -100, "yourBet": "ОЗ", "yourCoef": 1.74, "yourBank": 1074, "yourProfit": 74}, {"n": 2, "xLabel": "CAN-BIH", "match": "Канада — Босния и Герцеговина", "team1": {"name": "Канада", "code": "CAN", "flag": "🇨🇦"}, "team2": {"name": "Босния и Герцеговина", "code": "BIH", "flag": "🇧🇦"}, "friendBet": "ЖК ТБ(3,5)", "friendCoef": 1.74, "friendBank": 974, "friendProfit": 74, "yourBet": "П1", "yourCoef": 1.82, "yourBank": 974, "yourProfit": -100}, {"n": 3, "xLabel": "USA-PAR", "match": "США — Парагвай", "team1": {"name": "США", "code": "USA", "flag": "🇺🇸"}, "team2": {"name": "Парагвай", "code": "PAR", "flag": "🇵🇾"}, "friendBet": "x2", "friendCoef": 1.85, "friendBank": 874, "friendProfit": -100, "yourBet": "П1", "yourCoef": 1.93, "yourBank": 1067, "yourProfit": 93}, {"n": 4, "xLabel": "QAT-SUI", "match": "Катар — Швейцария", "team1": {"name": "Катар", "code": "QAT", "flag": "🇶🇦"}, "team2": {"name": "Швейцария", "code": "SUI", "flag": "🇨🇭"}, "friendBet": "0-0", "friendCoef": 18.0, "friendBank": 774, "friendProfit": -100, "yourBet": "Забьёт ровно одна команда — да", "yourCoef": 1.66, "yourBank": 967, "yourProfit": -100}, {"n": 5, "xLabel": "BRA-MAR", "match": "Бразилия — Марокко", "team1": {"name": "Бразилия", "code": "BRA", "flag": "🇧🇷"}, "team2": {"name": "Марокко", "code": "MAR", "flag": "🇲🇦"}, "friendBet": "1-0", "friendCoef": 6.2, "friendBank": 674, "friendProfit": -100, "yourBet": "П2 с Ф(+1,5)", "yourCoef": 1.38, "yourBank": 1005, "yourProfit": 38}, {"n": 6, "xLabel": "HAI-SCO", "match": "Гаити — Шотландия", "team1": {"name": "Гаити", "code": "HAI", "flag": "🇭🇹"}, "team2": {"name": "Шотландия", "code": "SCO", "flag": "🏴"}, "friendBet": "Угловые: ТБ(6,5)", "friendCoef": 1.13, "friendBank": 687, "friendProfit": 13, "yourBet": "Угловые: П2 с Ф(-1,5)", "yourCoef": 1.66, "yourBank": 905, "yourProfit": -100}, {"n": 7, "xLabel": "AUS-TUR", "match": "Австралия — Турция", "team1": {"name": "Австралия", "code": "AUS", "flag": "🇦🇺"}, "team2": {"name": "Турция", "code": "TUR", "flag": "🇹🇷"}, "friendBet": "П2", "friendCoef": 1.71, "friendBank": 587, "friendProfit": -100, "yourBet": "Пенальти", "yourCoef": 3.1, "yourBank": 805, "yourProfit": -100}, {"n": 8, "xLabel": "GER-CUW", "match": "Германия — Кюрасао", "team1": {"name": "Германия", "code": "GER", "flag": "🇩🇪"}, "team2": {"name": "Кюрасао", "code": "CUW", "flag": "🇨🇼"}, "friendBet": "Хаверц забьёт", "friendCoef": 1.52, "friendBank": 639, "friendProfit": 52, "yourBet": "ТМ > 5,5", "yourCoef": 3.2, "yourBank": 1025, "yourProfit": 220}, {"n": 9, "xLabel": "NED-JPN", "match": "Нидерланды — Япония", "team1": {"name": "Нидерланды", "code": "NED", "flag": "🇳🇱"}, "team2": {"name": "Япония", "code": "JPN", "flag": "🇯🇵"}, "friendBet": "1-1", "friendCoef": 7.2, "friendBank": 539, "friendProfit": -100, "yourBet": "Первый гол позже 30,5 минуты", "yourCoef": 1.81, "yourBank": 1106, "yourProfit": 81}, {"n": 10, "xLabel": "CIV-ECU", "match": "Кот д'Ивуар — Эквадор", "team1": {"name": "Кот д'Ивуар", "code": "CIV", "flag": "🇨🇮"}, "team2": {"name": "Эквадор", "code": "ECU", "flag": "🇪🇨"}, "friendBet": "Удаление будет", "friendCoef": 4.9, "friendBank": 439, "friendProfit": -100, "yourBet": "ЖК: П1", "yourCoef": 2.34, "yourBank": 1240, "yourProfit": 134}, {"n": 11, "xLabel": "SWE-TUN", "match": "Швеция — Тунис", "team1": {"name": "Швеция", "code": "SWE", "flag": "🇸🇪"}, "team2": {"name": "Тунис", "code": "TUN", "flag": "🇹🇳"}, "friendBet": "Ничья в одном из таймов", "friendCoef": 1.43, "friendBank": 339, "friendProfit": -100, "yourBet": "П1 хотя бы в одном из таймов", "yourCoef": 1.45, "yourBank": 1285, "yourProfit": 45}, {"n": 12, "xLabel": "ESP-CPV", "match": "Испания — Кабо-Верде", "team1": {"name": "Испания", "code": "ESP", "flag": "🇪🇸"}, "team2": {"name": "Кабо-Верде", "code": "CPV", "flag": "🇨🇻"}, "friendBet": "Ферран Торрес забьёт", "friendCoef": 1.83, "friendBank": 239, "friendProfit": -100, "yourBet": "П1 и тотал Испании < 3,5", "yourCoef": 1.84, "yourBank": 1185, "yourProfit": -100}, {"n": 13, "xLabel": "BEL-EGY", "match": "Бельгия — Египет", "team1": {"name": "Бельгия", "code": "BEL", "flag": "🇧🇪"}, "team2": {"name": "Египет", "code": "EGY", "flag": "🇪🇬"}, "friendBet": "Обе забьют", "friendCoef": 1.95, "friendBank": 334, "friendProfit": 95, "yourBet": "Кевин де Брёйне: удары в створ > 0,5", "yourCoef": 1.5, "yourBank": 1235, "yourProfit": 50}, {"n": 14, "xLabel": "KSA-URU", "match": "Саудовская Аравия — Уругвай", "team1": {"name": "Саудовская Аравия", "code": "KSA", "flag": "🇸🇦"}, "team2": {"name": "Уругвай", "code": "URU", "flag": "🇺🇾"}, "friendBet": "П2", "friendCoef": 1.47, "friendBank": 234, "friendProfit": -100, "yourBet": "Штанга/перекладина будет", "yourCoef": 2.44, "yourBank": 1379, "yourProfit": 144}, {"n": 15, "xLabel": "IRN-NZL", "match": "Иран — Новая Зеландия", "team1": {"name": "Иран", "code": "IRN", "flag": "🇮🇷"}, "team2": {"name": "Новая Зеландия", "code": "NZL", "flag": "🇳🇿"}, "friendBet": "Забьёт ровно одна команда — да", "friendCoef": 2.01, "friendBank": 134, "friendProfit": -100, "yourBet": "П1 и ТМ < 3,5", "yourCoef": 2.25, "yourBank": 1279, "yourProfit": -100}, {"n": 16, "xLabel": "FRA-SEN", "match": "Франция — Сенегал", "team1": {"name": "Франция", "code": "FRA", "flag": "🇫🇷"}, "team2": {"name": "Сенегал", "code": "SEN", "flag": "🇸🇳"}, "friendBet": "Обе забьют", "friendCoef": 2.01, "friendBank": 235, "friendProfit": 101, "yourBet": "Тотал офсайдов > 2,5", "yourCoef": 1.81, "yourBank": 1360, "yourProfit": 81}, {"n": 17, "xLabel": "IRQ-NOR", "match": "Ирак — Норвегия", "team1": {"name": "Ирак", "code": "IRQ", "flag": "🇮🇶"}, "team2": {"name": "Норвегия", "code": "NOR", "flag": "🇳🇴"}, "friendBet": "Эрлинг Холанн — дубль", "friendCoef": 3.0, "friendBank": 435, "friendProfit": 200, "yourBet": "П2 с Ф(-3)", "yourCoef": 3.9, "yourBank": 1360, "yourProfit": 0}, {"n": 18, "xLabel": "ARG-ALG", "match": "Аргентина — Алжир", "team1": {"name": "Аргентина", "code": "ARG", "flag": "🇦🇷"}, "team2": {"name": "Алжир", "code": "ALG", "flag": "🇩🇿"}, "friendBet": "П1 и обе забьют", "friendCoef": 3.56, "friendBank": 335, "friendProfit": -100, "yourBet": "Сухая П1 и ТМ < 3,5", "yourCoef": 2.34, "yourBank": 1494, "yourProfit": 134}, {"n": 19, "xLabel": "AUT-JOR", "match": "Австрия — Иордания", "team1": {"name": "Австрия", "code": "AUT", "flag": "🇦🇹"}, "team2": {"name": "Иордания", "code": "JOR", "flag": "🇯🇴"}, "friendBet": "Сухая П1", "friendCoef": 2.07, "friendBank": 235, "friendProfit": -100, "yourBet": "П1 по ударам с Ф(-7,5)", "yourCoef": 1.65, "yourBank": 1394, "yourProfit": -100}, {"n": 20, "xLabel": "POR-COD", "match": "Португалия — ДР Конго", "team1": {"name": "Португалия", "code": "POR", "flag": "🇵🇹"}, "team2": {"name": "ДР Конго", "code": "COD", "flag": "🇨🇩"}, "friendBet": "ЖК Роналду", "friendCoef": 7.8, "friendBank": 135, "friendProfit": -100, "yourBet": "П2 (ЖК)", "yourCoef": 1.75, "yourBank": 1294, "yourProfit": -100}, {"n": 21, "xLabel": "ENG-CRO", "match": "Англия — Хорватия", "team1": {"name": "Англия", "code": "ENG", "flag": "🏴"}, "team2": {"name": "Хорватия", "code": "CRO", "flag": "🇭🇷"}, "friendBet": "Обе забьют", "friendCoef": 2.02, "friendBank": 237, "friendProfit": 102, "yourBet": "Цифра 1 в счёте — да", "yourCoef": 1.62, "yourBank": 1194, "yourProfit": -100}, {"n": 22, "xLabel": "GHA-PAN", "match": "Гана — Панама", "team1": {"name": "Гана", "code": "GHA", "flag": "🇬🇭"}, "team2": {"name": "Панама", "code": "PAN", "flag": "🇵🇦"}, "friendBet": "ТМ > 2,5", "friendCoef": 2.36, "friendBank": 137, "friendProfit": -100, "yourBet": "П1 (офсайды)", "yourCoef": 1.56, "yourBank": 1250, "yourProfit": 56}, {"n": 23, "xLabel": "UZB-COL", "match": "Узбекистан — Колумбия", "team1": {"name": "Узбекистан", "code": "UZB", "flag": "🇺🇿"}, "team2": {"name": "Колумбия", "code": "COL", "flag": "🇨🇴"}, "friendBet": "Удаление будет", "friendCoef": 6.1, "friendBank": 37, "friendProfit": -100, "yourBet": "Тайм-матч (ЖК): НП1", "yourCoef": 4.7, "yourBank": 1150, "yourProfit": -100}, {"n": 24, "xLabel": "CZE-RSA", "match": "Чехия — ЮАР", "team1": {"name": "Чехия", "code": "CZE", "flag": "🇨🇿"}, "team2": {"name": "ЮАР", "code": "RSA", "flag": "🇿🇦"}, "friendBet": "ЖК: ТМ > 5,5", "friendCoef": 4.3, "friendBank": -63, "friendProfit": -100, "yourBet": "Гол головой", "yourCoef": 2.8, "yourBank": 1050, "yourProfit": -100}, {"n": 25, "xLabel": "SUI-BIH", "match": "Швейцария — Босния и Герцеговина", "team1": {"name": "Швейцария", "code": "SUI", "flag": "🇨🇭"}, "team2": {"name": "Босния и Герцеговина", "code": "BIH", "flag": "🇧🇦"}, "friendBet": "Удаление будет", "friendCoef": 4.55, "friendBank": 292, "friendProfit": 355, "yourBet": "Гол головой", "yourCoef": 2.8, "yourBank": 950, "yourProfit": -100}, {"n": 26, "xLabel": "CAN-QAT", "match": "Канада — Катар", "team1": {"name": "Канада", "code": "CAN", "flag": "🇨🇦"}, "team2": {"name": "Катар", "code": "QAT", "flag": "🇶🇦"}, "friendBet": "П1 в обоих таймах", "friendCoef": 2.56, "friendBank": 448, "friendProfit": 156, "yourBet": "1x (офсайды)", "yourCoef": 1.61, "yourBank": 1011, "yourProfit": 61}, {"n": 27, "xLabel": "MEX-KOR", "match": "Мексика — Южная Корея", "team1": {"name": "Мексика", "code": "MEX", "flag": "🇲🇽"}, "team2": {"name": "Южная Корея", "code": "KOR", "flag": "🇰🇷"}, "friendBet": "Обе забьют", "friendCoef": 1.94, "friendBank": 348, "friendProfit": -100, "yourBet": "Обе забьют", "yourCoef": 1.94, "yourBank": 911, "yourProfit": -100}, {"n": 28, "xLabel": "USA-AUS", "match": "США — Австралия", "team1": {"name": "США", "code": "USA", "flag": "🇺🇸"}, "team2": {"name": "Австралия", "code": "AUS", "flag": "🇦🇺"}, "friendBet": "2-0", "friendCoef": 7.6, "friendBank": 1008, "friendProfit": 660, "yourBet": "П1 и ТМ > 1,5", "yourCoef": 1.96, "yourBank": 1007, "yourProfit": 96}, {"n": 29, "xLabel": "SCO-MAR", "match": "Шотландия — Марокко", "team1": {"name": "Шотландия", "code": "SCO", "flag": "🏴"}, "team2": {"name": "Марокко", "code": "MAR", "flag": "🇲🇦"}, "friendBet": "П2", "friendCoef": 1.74, "friendBank": 1082, "friendProfit": 74, "yourBet": "П2", "yourCoef": 1.74, "yourBank": 1081, "yourProfit": 74}, {"n": 30, "xLabel": "BRA-HAI", "match": "Бразилия — Гаити", "team1": {"name": "Бразилия", "code": "BRA", "flag": "🇧🇷"}, "team2": {"name": "Гаити", "code": "HAI", "flag": "🇭🇹"}, "friendBet": "Винисиус забьёт", "friendCoef": 1.83, "friendBank": 1165, "friendProfit": 83, "yourBet": "Угловые: тотал Гаити < 2,5", "yourCoef": 1.53, "yourBank": 981, "yourProfit": -100}, {"n": 31, "xLabel": "TUR-PAR", "match": "Турция — Парагвай", "team1": {"name": "Турция", "code": "TUR", "flag": "🇹🇷"}, "team2": {"name": "Парагвай", "code": "PAR", "flag": "🇵🇾"}, "friendBet": "Голевых передач А. Гюлера > 0,5", "friendCoef": 2.5, "friendBank": 1065, "friendProfit": -100, "yourBet": "ТМ > 2", "yourCoef": 1.57, "yourBank": 881, "yourProfit": -100}, {"n": 32, "xLabel": "NED-SWE", "match": "Нидерланды — Швеция", "team1": {"name": "Нидерланды", "code": "NED", "flag": "🇳🇱"}, "team2": {"name": "Швеция", "code": "SWE", "flag": "🇸🇪"}, "friendBet": "ТМ > 3,5", "friendCoef": 2.52, "friendBank": 1217, "friendProfit": 152, "yourBet": "Нидерланды пропустят, но выиграют", "yourCoef": 3.1, "yourBank": 1091, "yourProfit": 210}];
+
+function signed(value) {
+  if (value > 0) return "+" + value;
+  return String(value);
+}
+
+function renderChart() {
+  const x = chartData.map(d => d.xLabel);
+
+  const gerzogCustom = chartData.map(d => [
+    d.team1.flag,
+    d.team1.name,
+    d.team2.flag,
+    d.team2.name,
+    d.friendBet,
+    d.friendCoef,
+    d.friendProfit,
+    d.friendBank
+  ]);
+
+  const yukonCustom = chartData.map(d => [
+    d.team1.flag,
+    d.team1.name,
+    d.team2.flag,
+    d.team2.name,
+    d.yourBet,
+    d.yourCoef,
+    d.yourProfit,
+    d.yourBank
+  ]);
+
+  const gerzog = {
+    x: x,
+    y: chartData.map(d => d.friendBank),
+    mode: "lines+markers",
+    name: "Gerzog",
+    line: { color: "#0000ff", width: 3 },
+    marker: { color: "#0000ff", size: 8 },
+    customdata: gerzogCustom,
+    hovertemplate:
+      "<b>Матч:</b> %{customdata[0]} %{customdata[1]} — %{customdata[2]} %{customdata[3]}<br>" +
+      "<b>Ставка:</b> %{customdata[4]}<br>" +
+      "<b>Коэффициент:</b> %{customdata[5]}<br>" +
+      "<b>Прибыль / убыль:</b> %{customdata[6]:+d}<br>" +
+      "<b>Итоговый банк:</b> %{customdata[7]}<extra>Gerzog</extra>"
+  };
+
+  const yukon = {
+    x: x,
+    y: chartData.map(d => d.yourBank),
+    mode: "lines+markers",
+    name: "Yukon",
+    line: { color: "#ff0000", width: 3 },
+    marker: { color: "#ff0000", size: 8 },
+    customdata: yukonCustom,
+    hovertemplate:
+      "<b>Матч:</b> %{customdata[0]} %{customdata[1]} — %{customdata[2]} %{customdata[3]}<br>" +
+      "<b>Ставка:</b> %{customdata[4]}<br>" +
+      "<b>Коэффициент:</b> %{customdata[5]}<br>" +
+      "<b>Прибыль / убыль:</b> %{customdata[6]:+d}<br>" +
+      "<b>Итоговый банк:</b> %{customdata[7]}<extra>Yukon</extra>"
+  };
+
+  const layout = {
+    paper_bgcolor: "#ffffff",
+    plot_bgcolor: "#ffffff",
+    font: {
+      family: "Times New Roman, Times, serif",
+      size: 15,
+      color: "#000000"
+    },
+    margin: { l: 70, r: 35, t: 35, b: 95 },
+    hovermode: "closest",
+    legend: {
+      orientation: "h",
+      x: 0.5,
+      xanchor: "center",
+      y: 1.08,
+      font: { size: 18 }
+    },
+    xaxis: {
+      title: "",
+      tickangle: -55,
+      tickfont: { size: 12 },
+      gridcolor: "rgba(0,0,0,0.12)",
+      zeroline: false
+    },
+    yaxis: {
+      title: "Банк",
+      titlefont: { size: 20 },
+      tickfont: { size: 15 },
+      gridcolor: "rgba(0,0,0,0.14)",
+      zeroline: false
+    },
+    shapes: [
+      {
+        type: "line",
+        xref: "paper",
+        x0: 0,
+        x1: 1,
+        yref: "y",
+        y0: 1000,
+        y1: 1000,
+        line: { color: "#000000", width: 1.4, dash: "dash" }
+      },
+      {
+        type: "line",
+        xref: "x",
+        x0: 23.5,
+        x1: 23.5,
+        yref: "paper",
+        y0: 0,
+        y1: 1,
+        line: { color: "#777777", width: 1.4, dash: "dash" }
+      }
+    ],
+    annotations: [
+      {
+        xref: "paper",
+        x: 0.01,
+        yref: "y",
+        y: 1000,
+        text: "Стартовый банк",
+        showarrow: false,
+        yshift: 13,
+        font: { size: 15, color: "#000000" }
+      },
+      {
+        xref: "x",
+        x: 23.7,
+        yref: "paper",
+        y: 1,
+        text: "Второй тур",
+        showarrow: false,
+        xanchor: "left",
+        yshift: 16,
+        font: { size: 16, color: "#000000" }
+      }
+    ]
+  };
+
+  Plotly.newPlot("bank-chart", [gerzog, yukon], layout, {
+    responsive: true,
+    displaylogo: false,
+    modeBarButtonsToRemove: ["lasso2d", "select2d"]
+  });
+}
+
+document.addEventListener("DOMContentLoaded", renderChart);
+</script>
 </body>
 </html>
