@@ -307,7 +307,7 @@ code {
   width: 17px;
   height: 12px;
   object-fit: cover;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.7);
 }
 
 .tooltip-bet {
