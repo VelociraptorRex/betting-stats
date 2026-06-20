@@ -34,6 +34,11 @@ footer {
   padding: 34px 0 50px;
 }
 
+.site-header {
+  padding: 34px 0 24px;
+  text-align: center;
+}
+
 .page-title,
 .site-header h1 {
   margin: 0 0 24px;
@@ -43,20 +48,14 @@ footer {
   line-height: 1.1;
 }
 
-.site-header {
-  padding: 34px 0 24px;
-  text-align: center;
-}
-
 .eyebrow,
 .site-header .eyebrow {
   margin: 0 0 16px;
   text-align: center;
-  color: #fff;
   font-size: 22px;
 }
 
-/* МЕНЮ: новое index.html + старые страницы */
+/* МЕНЮ */
 
 .top-menu,
 .site-header nav,
@@ -73,9 +72,9 @@ header nav {
 header nav a {
   min-width: 145px;
   padding: 14px 20px;
-  border: 2px solid #fff;
+  border: 2px solid currentColor;
   border-radius: 14px;
-  color: #fff;
+  color: inherit;
   text-align: center;
   text-decoration: none;
   font-size: 22px;
@@ -83,14 +82,21 @@ header nav a {
   transition: 0.15s ease;
 }
 
-.top-menu a:hover,
-.site-header nav a:hover,
-header nav a:hover {
+.dark-theme .top-menu a:hover,
+.dark-theme .site-header nav a:hover,
+.dark-theme header nav a:hover {
   background: #fff;
   color: #000;
 }
 
-/* КАРТОЧКИ НА ГЛАВНОЙ */
+.light-theme .top-menu a:hover,
+.light-theme .site-header nav a:hover,
+.light-theme header nav a:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ГЛАВНАЯ: КАРТОЧКИ */
 
 .summary-grid {
   display: grid;
@@ -100,11 +106,18 @@ header nav a:hover {
 }
 
 .summary-card {
-  border: 2px solid #fff;
+  border: 2px solid currentColor;
   border-radius: 20px;
   padding: 24px 16px;
   text-align: center;
+}
+
+.dark-theme .summary-card {
   background: #080808;
+}
+
+.light-theme .summary-card {
+  background: #fff;
 }
 
 .summary-card .label {
@@ -123,16 +136,22 @@ header nav a:hover {
 .summary-card .sub {
   display: block;
   font-size: 20px;
-  color: #cfcfcf;
 }
 
 /* ГРАФИК */
 
 .chart-block {
   padding: 18px;
-  border: 2px solid #fff;
+  border: 2px solid currentColor;
   border-radius: 22px;
+}
+
+.dark-theme .chart-block {
   background: #111;
+}
+
+.light-theme .chart-block {
+  background: #fff;
 }
 
 #bank-chart {
@@ -146,20 +165,30 @@ header nav a:hover {
 .note {
   margin: 12px 0 0;
   text-align: center;
-  color: #cfcfcf;
   font-size: 18px;
 }
 
-/* СТАРЫЕ СТРАНИЦЫ: БЛОКИ, ТАБЛИЦЫ */
+/* СТРАНИЦЫ С ТАБЛИЦАМИ */
 
 .panel,
 .notice,
 .card {
   margin-bottom: 24px;
   padding: 22px;
-  border: 2px solid #fff;
+  border: 2px solid currentColor;
   border-radius: 20px;
+}
+
+.dark-theme .panel,
+.dark-theme .notice,
+.dark-theme .card {
   background: #080808;
+}
+
+.light-theme .panel,
+.light-theme .notice,
+.light-theme .card {
+  background: #fff;
 }
 
 .panel h2,
@@ -171,7 +200,6 @@ header nav a:hover {
 
 .notice p,
 .panel p {
-  color: #fff;
   font-size: 22px;
 }
 
@@ -188,25 +216,29 @@ header nav a:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  color: #fff;
+  color: inherit;
   font-size: 22px;
 }
 
 th,
 td {
   padding: 10px 14px;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid currentColor;
   text-align: left;
   vertical-align: top;
 }
 
 th {
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid currentColor;
   font-weight: 700;
 }
 
-tr:hover td {
+.dark-theme tr:hover td {
   background: #151515;
+}
+
+.light-theme tr:hover td {
+  background: #f2f2f2;
 }
 
 /* ЦВЕТА ПРИБЫЛИ */
@@ -226,12 +258,24 @@ tr:hover td {
 footer {
   padding: 20px 0 40px;
   text-align: center;
-  color: #cfcfcf;
   font-size: 18px;
 }
 
+.dark-theme footer,
+.dark-theme .note,
+.dark-theme .summary-card .sub {
+  color: #cfcfcf;
+}
+
+.light-theme footer,
+.light-theme .note,
+.light-theme .summary-card .sub,
+.light-theme .eyebrow {
+  color: #444;
+}
+
 code {
-  color: #fff;
+  color: inherit;
 }
 
 /* АДАПТИВ */
@@ -289,88 +333,4 @@ code {
   table {
     font-size: 18px;
   }
-}
-
-/* =========================
-   ТЁМНАЯ ТЕМА (index.html)
-   ========================= */
-
-.dark-theme .summary-card,
-.dark-theme .chart-block {
-  background: #080808;
-  border: 2px solid #fff;
-}
-
-.dark-theme .top-menu a {
-  color: #fff;
-  border-color: #fff;
-}
-
-.dark-theme .top-menu a:hover {
-  background: #fff;
-  color: #000;
-}
-
-/* =========================
-   СВЕТЛАЯ ТЕМА
-   ========================= */
-
-.light-theme .panel,
-.light-theme .notice,
-.light-theme .card {
-  background: #fff;
-  border: 2px solid #000;
-  color: #000;
-}
-
-.light-theme table {
-  color: #000;
-}
-
-.light-theme th {
-  border-bottom: 2px solid #000;
-}
-
-.light-theme td {
-  border-bottom: 1px solid #bbb;
-}
-
-.light-theme tr:hover td {
-  background: #f2f2f2;
-}
-
-.light-theme .top-menu a,
-.light-theme nav a {
-  color: #000;
-  border-color: #000;
-}
-
-.light-theme .top-menu a:hover,
-.light-theme nav a:hover {
-  background: #000;
-  color: #fff;
-}
-
-.light-theme .eyebrow,
-.light-theme .note,
-.light-theme footer {
-  color: #444;
-}
-
-.light-theme code {
-  color: #000;
-}
-
-.light-theme .panel p,
-.light-theme .notice p {
-  color: #000;
-}
-
-.light-theme .site-header h1,
-.light-theme .page-title {
-  color: #000;
-}
-
-.light-theme .site-header .eyebrow {
-  color: #444;
 }
