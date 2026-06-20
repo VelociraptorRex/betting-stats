@@ -4,9 +4,17 @@
 
 body {
   margin: 0;
+  font-family: "Times New Roman", Times, serif;
+}
+
+body.dark-theme {
   background: #000;
   color: #fff;
-  font-family: "Times New Roman", Times, serif;
+}
+
+body.light-theme {
+  background: #fff;
+  color: #000;
 }
 
 /* ОБЩАЯ ШИРИНА */
@@ -281,4 +289,79 @@ code {
   table {
     font-size: 18px;
   }
+}
+
+/* =========================
+   ТЁМНАЯ ТЕМА (index.html)
+   ========================= */
+
+.dark-theme .summary-card,
+.dark-theme .chart-block {
+  background: #080808;
+  border: 2px solid #fff;
+}
+
+.dark-theme .top-menu a {
+  color: #fff;
+  border-color: #fff;
+}
+
+.dark-theme .top-menu a:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* =========================
+   СВЕТЛАЯ ТЕМА
+   ========================= */
+
+.light-theme .panel,
+.light-theme .notice,
+.light-theme .card {
+  background: #fff;
+  border: 2px solid #000;
+  color: #000;
+}
+
+.light-theme table {
+  color: #000;
+}
+
+.light-theme th {
+  border-bottom: 2px solid #000;
+}
+
+.light-theme td {
+  border-bottom: 1px solid #bbb;
+}
+
+.light-theme tr:hover td {
+  background: #f2f2f2;
+}
+
+.light-theme .top-menu a,
+.light-theme nav a {
+  color: #000;
+  border-color: #000;
+}
+
+.light-theme .top-menu a:hover,
+.light-theme nav a:hover {
+  background: #000;
+  color: #fff;
+}
+
+.light-theme .eyebrow,
+.light-theme .note,
+.light-theme footer {
+  color: #444;
+}
+
+.light-theme code {
+  color: #000;
+}
+
+.light-theme .panel p,
+.light-theme .notice p {
+  color: #000;
 }
