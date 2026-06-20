@@ -256,23 +256,22 @@ function showCustomTooltip(eventData, player) {
 
   tooltip.style.display = "block";
 
-  const offset = 18;
+  const offset = 14;
+  const margin = 12;
+  
+  tooltip.style.left = "0px";
+  tooltip.style.top = "0px";
+  
+  const rect = tooltip.getBoundingClientRect();
   
   let x = eventData.event.clientX + offset;
   let y = eventData.event.clientY + offset;
   
-  const rect = tooltip.getBoundingClientRect();
+  x = Math.min(x, window.innerWidth - rect.width - margin);
+  y = Math.min(y, window.innerHeight - rect.height - margin);
   
-  if (x + rect.width > window.innerWidth) {
-    x = eventData.event.clientX - rect.width - offset;
-  }
-  
-  if (y + rect.height > window.innerHeight) {
-    y = eventData.event.clientY - rect.height - offset;
-  }
-  
-  if (x < 0) x = offset;
-  if (y < 0) y = offset;
+  x = Math.max(x, margin);
+  y = Math.max(y, margin);
   
   tooltip.style.left = `${x}px`;
   tooltip.style.top = `${y}px`;
