@@ -336,34 +336,75 @@ code {
 }
 
 .custom-tooltip {
-  min-width: 120px;
-  max-width: 180px;
+  position: fixed;
+  z-index: 9999;
 
-  padding: 5px 6px;
+  min-width: 180px;
+  max-width: 280px;
 
-  border-radius: 4px;
+  padding: 7px 9px;
 
-  font-size: 9px;
+  border-radius: 5px;
+
+  font-family: "Times New Roman", Times, serif;
+  font-size: 13px;
+  line-height: 1.2;
+
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+}
+
+.custom-tooltip.gerzog {
+  background: rgba(0, 0, 255, 0.65);
+}
+
+.custom-tooltip.yukon {
+  background: rgba(255, 0, 0, 0.65);
 }
 
 .tooltip-match {
-  gap: 4px;
-  margin-bottom: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 4px;
+  font-weight: 700;
 }
 
 .tooltip-flag {
-  width: 11px;
-  height: 8px;
+  width: 17px;
+  height: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .tooltip-bet {
-  margin: 2px 0;
+  margin: 4px 0;
+  font-style: italic;
 }
 
 .tooltip-coef {
-  margin: 2px 0;
+  margin: 4px 0;
+  font-weight: 700;
+}
+
+.tooltip-profit-plus {
+  color: #00ff66;
+}
+
+.tooltip-profit-minus {
+  color: #ff2222;
+}
+
+.tooltip-profit-zero {
+  color: #ffd400;
 }
 
 .tooltip-bank {
-  margin-top: 2px;
+  margin-top: 4px;
+  font-weight: 700;
 }
