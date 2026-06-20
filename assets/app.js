@@ -11,6 +11,8 @@ function renderBankChart() {
     y: chartData.map(d => d.friendBank),
     mode: "lines+markers",
     name: "Gerzog",
+    hoverinfo: "skip",
+    hovertemplate: null,
     line: { color: "#0000ff", width: 3 },
     marker: { color: "#0000ff", size: 8 },
     customdata: chartData.map(d => [
@@ -30,6 +32,8 @@ function renderBankChart() {
     y: chartData.map(d => d.yourBank),
     mode: "lines+markers",
     name: "Yukon",
+    hoverinfo: "skip",
+    hovertemplate: null,
     line: { color: "#ff0000", width: 3 },
     marker: { color: "#ff0000", size: 8 },
     customdata: chartData.map(d => [
@@ -130,3 +134,139 @@ function renderBankChart() {
 }
 
 document.addEventListener("DOMContentLoaded", renderBankChart);
+
+const flagUrls = {
+  KOR: "https://flagcdn.com/w40/kr.png",
+  CZE: "https://flagcdn.com/w40/cz.png",
+  CAN: "https://flagcdn.com/w40/ca.png",
+  BIH: "https://flagcdn.com/w40/ba.png",
+  USA: "https://flagcdn.com/w40/us.png",
+  PAR: "https://flagcdn.com/w40/py.png",
+  QAT: "https://flagcdn.com/w40/qa.png",
+  SUI: "https://flagcdn.com/w40/ch.png",
+  BRA: "https://flagcdn.com/w40/br.png",
+  MAR: "https://flagcdn.com/w40/ma.png",
+  HAI: "https://flagcdn.com/w40/ht.png",
+  SCO: "https://flagcdn.com/w40/gb-sct.png",
+  AUS: "https://flagcdn.com/w40/au.png",
+  TUR: "https://flagcdn.com/w40/tr.png",
+  GER: "https://flagcdn.com/w40/de.png",
+  CUW: "https://flagcdn.com/w40/cw.png",
+  NED: "https://flagcdn.com/w40/nl.png",
+  JPN: "https://flagcdn.com/w40/jp.png",
+  CIV: "https://flagcdn.com/w40/ci.png",
+  ECU: "https://flagcdn.com/w40/ec.png",
+  SWE: "https://flagcdn.com/w40/se.png",
+  TUN: "https://flagcdn.com/w40/tn.png",
+  ESP: "https://flagcdn.com/w40/es.png",
+  CPV: "https://flagcdn.com/w40/cv.png",
+  BEL: "https://flagcdn.com/w40/be.png",
+  EGY: "https://flagcdn.com/w40/eg.png",
+  KSA: "https://flagcdn.com/w40/sa.png",
+  URU: "https://flagcdn.com/w40/uy.png",
+  IRN: "https://flagcdn.com/w40/ir.png",
+  NZL: "https://flagcdn.com/w40/nz.png",
+  FRA: "https://flagcdn.com/w40/fr.png",
+  SEN: "https://flagcdn.com/w40/sn.png",
+  IRQ: "https://flagcdn.com/w40/iq.png",
+  NOR: "https://flagcdn.com/w40/no.png",
+  ARG: "https://flagcdn.com/w40/ar.png",
+  ALG: "https://flagcdn.com/w40/dz.png",
+  AUT: "https://flagcdn.com/w40/at.png",
+  JOR: "https://flagcdn.com/w40/jo.png",
+  POR: "https://flagcdn.com/w40/pt.png",
+  COD: "https://flagcdn.com/w40/cd.png",
+  ENG: "https://flagcdn.com/w40/gb-eng.png",
+  CRO: "https://flagcdn.com/w40/hr.png",
+  GHA: "https://flagcdn.com/w40/gh.png",
+  PAN: "https://flagcdn.com/w40/pa.png",
+  UZB: "https://flagcdn.com/w40/uz.png",
+  COL: "https://flagcdn.com/w40/co.png",
+  RSA: "https://flagcdn.com/w40/za.png",
+  MEX: "https://flagcdn.com/w40/mx.png"
+};
+
+function profitClass(value) {
+  if (value > 0) return "tooltip-profit-plus";
+  if (value < 0) return "tooltip-profit-minus";
+  return "tooltip-profit-zero";
+}
+
+function formatProfit(value) {
+  if (value > 0) return `+${value}`;
+  if (value === 0) return "+0";
+  return String(value);
+}
+
+function createCustomTooltip() {
+  let tooltip = document.querySelector(".custom-tooltip");
+
+  if (!tooltip) {
+    tooltip = document.createElement("div");
+    tooltip.className = "custom-tooltip";
+    tooltip.style.display = "none";
+    document.body.appendChild(tooltip);
+  }
+
+  return tooltip;
+}
+
+function showCustomTooltip(eventData, player) {
+  const point = eventData.points[0];
+  const d = chartData[point.pointIndex];
+
+  const isGerzog = player === "Gerzog";
+
+  const bet = isGerzog ? d.friendBet : d.yourBet;
+  const coef = isGerzog ? d.friendCoef : d.yourCoef;
+  const profit = isGerzog ? d.friendProfit : d.yourProfit;
+  const bank = isGerzog ? d.friendBank : d.yourBank;
+
+  const tooltip = createCustomTooltip();
+
+  tooltip.className = `custom-tooltip ${isGerzog ? "gerzog" : "yukon"}`;
+
+  tooltip.innerHTML = `
+    <div class="tooltip-match">
+      <img class="tooltip-flag" src="${flagUrls[d.team1.code] || ""}" alt="">
+      <span>${d.team1.name}</span>
+      <span>—</span>
+      <img class="tooltip-flag" src="${flagUrls[d.team2.code] || ""}" alt="">
+      <span>${d.team2.name}</span>
+    </div>
+
+    <div class="tooltip-bet">${bet}</div>
+
+    <div class="tooltip-coef">
+      ${coef}
+      <span class="${profitClass(profit)}">(${formatProfit(profit)})</span>
+    </div>
+
+    <div class="tooltip-bank">Итоговый банк: ${bank}</div>
+  `;
+
+  tooltip.style.display = "block";
+
+  const x = eventData.event.clientX + 18;
+  const y = eventData.event.clientY + 18;
+
+  tooltip.style.left = `${x}px`;
+  tooltip.style.top = `${y}px`;
+}
+
+function hideCustomTooltip() {
+  const tooltip = document.querySelector(".custom-tooltip");
+  if (tooltip) tooltip.style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const chart = document.getElementById("bank-chart");
+  if (!chart) return;
+
+  chart.on("plotly_hover", (eventData) => {
+    const player = eventData.points[0].data.name;
+    showCustomTooltip(eventData, player);
+  });
+
+  chart.on("plotly_unhover", hideCustomTooltip);
+});
