@@ -11,10 +11,11 @@ function renderBankChart() {
     y: chartData.map(d => d.friendBank),
     mode: "lines+markers",
     name: "Gerzog",
-    hoverinfo: "skip",
-    hovertemplate: null,
+    hoverinfo: "none",
+    hovertemplate: "",
     line: { color: "#0000ff", width: 3 },
-    marker: { color: "#0000ff", size: 8 },
+    marker: { color: "#0000ff", size: 8 }
+  };
     customdata: chartData.map(d => [
       d.team1.flag, d.team1.name, d.team2.flag, d.team2.name,
       d.friendBet, d.friendCoef, d.friendProfit, d.friendBank
@@ -32,10 +33,11 @@ function renderBankChart() {
     y: chartData.map(d => d.yourBank),
     mode: "lines+markers",
     name: "Yukon",
-    hoverinfo: "skip",
-    hovertemplate: null,
+    hoverinfo: "none",
+    hovertemplate: "",
     line: { color: "#ff0000", width: 3 },
-    marker: { color: "#ff0000", size: 8 },
+    marker: { color: "#ff0000", size: 8 }
+  };
     customdata: chartData.map(d => [
       d.team1.flag, d.team1.name, d.team2.flag, d.team2.name,
       d.yourBet, d.yourCoef, d.yourProfit, d.yourBank
