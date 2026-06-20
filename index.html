@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ru">
 <head>
-    <title>Моя статистика ставок</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Динамика банка</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 <body>
-    <h1>Привет!</h1>
-    <p>Сайт работает.</p>
+<header class="site-header">
+  <div>
+    <p class="eyebrow">World Cup 2026 betting dashboard</p>
+    <h1>Динамика банка после матчей первого и второго тура</h1>
+  </div>
+  <nav>
+    <a href="index.html">График</a>
+    <a href="bets.html">Все ставки</a>
+    <a href="records.html">Рекорды</a>
+    <a href="countries.html">Страны</a>
+    <a href="markets.html">Типы ставок</a>
+  </nav>
+</header>
+<main>
+
+<section class="cards">
+  <article class="card"><span>Gerzog</span><strong>1217</strong><em class="plus">+217</em></article>
+  <article class="card"><span>Yukon</span><strong>1091</strong><em class="plus">+91</em></article>
+  <article class="card"><span>Матчей</span><strong>32</strong><em>2 тура</em></article>
+  <article class="card"><span>Лидер</span><strong>Gerzog</strong><em>по текущему банку</em></article>
+</section>
+
+<section class="panel">
+  <div class="panel-title">
+    <h2>Интерактивный график</h2>
+    <p>Наведи на точку: увидишь матч, банк и изменение после ставки.</p>
+  </div>
+  <div id="bank-chart" class="chart"></div>
+</section>
+
+<section class="panel">
+  <h2>Самые прибыльные ставки</h2>
+  <div class="table-wrap"><table><thead><tr><th>№</th><th>Игрок</th><th>Матч</th><th>Ставка</th><th>Кэф</th><th>Профит</th></tr></thead><tbody><tr><td>28</td><td>Gerzog</td><td>США — Австралия</td><td>2-0</td><td>7.6</td><td class="plus">660</td></tr><tr><td>25</td><td>Gerzog</td><td>Швейцария — Босния и Герцеговина</td><td>Удаление будет</td><td>4.55</td><td class="plus">355</td></tr><tr><td>8</td><td>Yukon</td><td>Германия — Кюрасао</td><td>ТМ &gt; 5,5</td><td>3.2</td><td class="plus">220</td></tr><tr><td>32</td><td>Yukon</td><td>Нидерланды — Швеция</td><td>Нидерланды пропустят, но выиграют</td><td>3.1</td><td class="plus">210</td></tr><tr><td>17</td><td>Gerzog</td><td>Ирак — Норвегия</td><td>Эрлинг Холанн — дубль</td><td>3.0</td><td class="plus">200</td></tr><tr><td>26</td><td>Gerzog</td><td>Канада — Катар</td><td>П1 в обоих таймах</td><td>2.56</td><td class="plus">156</td></tr><tr><td>32</td><td>Gerzog</td><td>Нидерланды — Швеция</td><td>ТМ &gt; 3,5</td><td>2.52</td><td class="plus">152</td></tr><tr><td>14</td><td>Yukon</td><td>Саудовская Аравия — Уругвай</td><td>Штанга/перекладина будет</td><td>2.44</td><td class="plus">144</td></tr><tr><td>10</td><td>Yukon</td><td>Кот д&#x27;Ивуар — Эквадор</td><td>ЖК: П1</td><td>2.34</td><td class="plus">134</td></tr><tr><td>18</td><td>Yukon</td><td>Аргентина — Алжир</td><td>Сухая П1 и ТМ &lt; 3,5</td><td>2.34</td><td class="plus">134</td></tr></tbody></table></div>
+</section>
+
+</main>
+<footer>
+  <p>Статический сайт для GitHub Pages. Данные хранятся в <code>assets/app.js</code>.</p>
+</footer>
+<script src="assets/app.js"></script>
 </body>
 </html>
