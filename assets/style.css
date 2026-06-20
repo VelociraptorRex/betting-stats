@@ -338,17 +338,17 @@ code {
 .custom-tooltip {
   position: fixed;
   z-index: 9999;
-  min-width: 360px;
-  max-width: 560px;
-  padding: 14px 18px;
-  border-radius: 10px;
+  min-width: 240px;
+  max-width: 340px;
+  padding: 8px 12px;
+  border-radius: 8px;
   font-family: "Times New Roman", Times, serif;
-  font-size: 26px;
-  line-height: 1.25;
+  font-size: 18px;
+  line-height: 1.15;
   color: #fff;
   text-align: center;
   pointer-events: none;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(2px);
 }
 
