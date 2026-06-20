@@ -277,14 +277,6 @@ function showCustomTooltip(eventData, player) {
   tooltip.style.top = `${y}px`;
 }
 
-.custom-tooltip.gerzog {
-  background: rgba(225, 0, 225, 0.65);
-}
-
-.custom-tooltip.yukon {
-  background: rgba(225, 0, 225, 0.65);
-}
-
 function hideCustomTooltip() {
   const tooltip = document.querySelector(".custom-tooltip");
   if (tooltip) tooltip.style.display = "none";
